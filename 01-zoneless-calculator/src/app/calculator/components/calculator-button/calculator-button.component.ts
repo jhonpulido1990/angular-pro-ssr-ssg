@@ -18,7 +18,9 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './calculator-button.component.css',
   host: {
-    class: 'w-1/4 border-r border-b border-indigo-400',
+    class: 'border-r border-b border-indigo-400',
+    '[class.w-2/4]': 'isDoubleSize()',
+    '[class.w-1/4]': '!isDoubleSize()'
   },
 })
 export class CalculatorButtonComponent {
@@ -40,9 +42,9 @@ export class CalculatorButtonComponent {
   //  return this.isCommand();
   //}
 
-  @HostBinding('class.w-2/4') get commandStyle() {
-    return this.isDoubleSize();
-  }
+//  @HostBinding('class.w-2/4') get commandStyle() {
+  //  return this.isDoubleSize();
+ // }
 
   handleClick() {
     if (!this.contenValue()?.nativeElement) {
