@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, HostListener, viewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, HostListener, inject, signal, viewChildren } from '@angular/core';
 import { CalculatorButtonComponent } from "../calculator-button/calculator-button.component";
+import { CalculatorService } from '../../services/calculator.service';
 
 @Component({
   selector: 'app-calculator',
@@ -11,8 +12,13 @@ import { CalculatorButtonComponent } from "../calculator-button/calculator-butto
   },
 })
 export class CalculatorComponent {
+  private calculatorService = inject(CalculatorService);
 
   public calculatorbutton = viewChildren(CalculatorButtonComponent); // todos los hijos
+
+  public resulText = computed(() => this.calculatorService.resultText());
+  public subResultText = computed(() => this.calculatorService.subResultText());
+  public lastOperator = computed(() => this.calculatorService.lastOperator());
 
   handleClick(key: string) {
     console.log({ key });
@@ -34,9 +40,9 @@ export class CalculatorComponent {
 
     this.handleClick(keyValue);
 
-    this.calculatorbutton().forEach( button => {
+    this.calculatorbutton().forEach((button) => {
       button.keyBoardPressedStyle(keyValue);
-    } )
+    });
   }
 }
 
