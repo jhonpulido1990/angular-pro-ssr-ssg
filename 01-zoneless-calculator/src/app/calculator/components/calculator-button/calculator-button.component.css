@@ -22,3 +22,7 @@ button:hover {
 .is-command {
   background-color: rgb(67 45 215);
 }
+
+.isPressed {
+  background-color: rgb(45, 28, 159);
+}

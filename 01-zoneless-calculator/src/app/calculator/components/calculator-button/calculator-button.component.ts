@@ -6,6 +6,7 @@ import {
   input,
   OnInit,
   output,
+  signal,
   viewChild,
   ViewEncapsulation,
 } from '@angular/core';
@@ -23,6 +24,7 @@ import {
 export class CalculatorButtonComponent {
   public onClick = output<string>();
   public contenValue = viewChild<ElementRef<HTMLButtonElement>>('button');
+  public isPresed = signal(false);
 
   public isCommand = input(false, {
     transform: (value: boolean | string) =>
@@ -43,11 +45,25 @@ export class CalculatorButtonComponent {
   }
 
   handleClick() {
-    if(!this.contenValue()?.nativeElement) {
+    if (!this.contenValue()?.nativeElement) {
       return;
     }
-    const value = this.contenValue()!.nativeElement.innerText
+    const value = this.contenValue()!.nativeElement.innerText;
 
-    this.onClick.emit(value.trim())
+    this.onClick.emit(value.trim());
+  }
+
+  public keyBoardPressedStyle(key: string) {
+    if (!this.contenValue()) return;
+
+    const value = this.contenValue()!.nativeElement.innerText;
+
+    if (value !== key) return;
+
+    this.isPresed.set(true);
+
+    setTimeout(() => {
+      this.isPresed.set(false)
+    }, 100)
   }
 }
